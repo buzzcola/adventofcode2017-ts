@@ -80,6 +80,22 @@ namespace Day02 {
             TODO: find non-universe-destroying algorithm.                
         */
 
+        // implementation 2: use hash lookups
+
+        // get max number in sequence (O(n))
+
+        // create a hashset
+
+        // for each number x, add x*n to the hashset for n=2+ until x*n is greater than max.
+        // -> this is the tricky bit. O(n) assuming there is some upper bound on possible element values, otherwise
+        //    complexity will grow with the maximum value of elements.
+
+        // for each number x, check if x exists in the hashset. (O(n))
+
+        // for the found number x, check against all other numbers until the dividend y is found. (O(n))
+
+        // return x/y
+
         throw new Error('No dividable combination found.');
     }
 
