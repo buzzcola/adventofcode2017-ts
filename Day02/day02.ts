@@ -65,6 +65,19 @@ namespace Day02 {
             }
         }
 
+        /*
+            Notes:
+            Even with the optimization above, this is O(N^2):
+                f(4) = (3 checks) + (2 checks) + (1 check)
+                f(n) = (n-1) + (n-2) + [...] + 1 -> sum of 1 to n-1.
+                     = E(i=1, n-1)
+                     = ((n-1)*(n-1+1)) / 2
+                     = ((n-1)*n) / 2
+            
+            Which looks like this: https://www.desmos.com/calculator/iyu8ltj7g3
+            TODO: find non-universe-destroying algorithm.                
+        */
+
         throw new Error('No dividable combination found.');
     }
 
