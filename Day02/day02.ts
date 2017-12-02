@@ -51,16 +51,18 @@ namespace Day02 {
     }
 
     function checksum02(input: number[]): number {
-        // Checksum for Part 02: find the first two numbers a,b in a row such that a / b is a whole number.
+        // Checksum for Part 02: find the first two numbers a,b in a row such 
+        // that a / b is a whole number and return the quotient.
 
         input.sort((a, b) => a - b).reverse();
 
-        // with the list sorted (descending), we only have to check each element against its subsequent elements.
+        // with the list sorted (descending), we only have to check each element
+        // against its subsequent elements.
         for (let i = 0; i < input.length; i++) {
             for (let j = i + 1; j < input.length; j++) {
-                let dividend = input[i] / input[j];
-                if (dividend % 1 === 0) {
-                    return dividend;
+                let quotient = input[i] / input[j];
+                if (quotient % 1 === 0) {
+                    return quotient;
                 }
             }
         }
@@ -68,7 +70,7 @@ namespace Day02 {
         /*
             Notes:
             Even with the optimization above, this is O(N^2):
-                f(4) = (3 checks) + (2 checks) + (1 check)
+                f(4) = (3 checks) + (2 checks) + (1 check) -> worst case
                 f(n) = (n-1) + (n-2) + [...] + 1 -> sum of 1 to n-1.
                      = E(i=1, n-1)
                      = ((n-1)*(n-1+1)) / 2
