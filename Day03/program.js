@@ -136,7 +136,6 @@ var Day03;
     }
     if (success) {
         console.log(`Crawling to square ${BIG_PROBLEM}`);
-        var crawler = new Day03.SpiralCrawler();
         crawler.travelToSquare(BIG_PROBLEM);
         console.log(`Answer: ${crawler.getDistanceToOrigin()}`);
     }
