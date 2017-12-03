@@ -8,9 +8,9 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "C:\\Users\\james\\code\\AdventOfCode2017\\Day02",
+            "program": "${workspaceFolder}/Day03\\day03.ts",
             "outFiles": [
-                "C:\\Users\\james\\code\\AdventOfCode2017\\Day02.js"
+                "${workspaceFolder}/**/*.js"
             ]
         }
     ]
