@@ -85,7 +85,7 @@ namespace Day02 {
             Let constant k be the maximum number in a spreadsheet row.
             Then, worst case:
                 get max: n steps
-                make multiples: (k-1)n steps (for the case where n=1)
+                make multiples: (k-1)n steps (for an element value of 1)
                 find dividend: n steps
                 find divisor: n steps
 
