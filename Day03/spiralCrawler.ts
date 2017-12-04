@@ -58,12 +58,13 @@ namespace Day03 {
             }
         }
 
-        private crawl() {
-            // if we're at the end of a segment, rotate.
-            if (this._positionInSegment == this._segmentLengthQueue[0]) {
+        private crawl() {            
+            if(this._positionInSegment < this._segmentLengthQueue[0]) {
+                // we're mid-segment, move forward.
+                this._positionInSegment++;
+            } else {                
+                // time to start a new segment. if we've completed two segments of the same length, this one will be longer.
                 this.rotate();
-
-                // start a new segment. if we've completed two segments of the same length, start a longer segment.
                 let newLength = this._segmentLengthQueue[0];                
                 if (this._segmentLengthQueue[0] == this._segmentLengthQueue[1]) {
                     newLength++;
@@ -72,10 +73,9 @@ namespace Day03 {
                 // save the new length in our length history.
                 this._segmentLengthQueue.pop();
                 this._segmentLengthQueue.unshift(newLength);
-                this._positionInSegment = 0;
+                this._positionInSegment = 1;
             }
-
-            this._positionInSegment++;
+            
             switch (this._currentDirection) {
                 case Direction.Down: this._y--; break;
                 case Direction.Left: this._x--; break;
@@ -83,10 +83,10 @@ namespace Day03 {
                 case Direction.Up: this._y++; break;
             }
 
-            // complete the move by updating the square number.
-            this._currentSquareNumber++;            
+            this._currentSquareNumber++;
 
-            // calculate the score by summing the score of all neighbours.
+            // calculate the score by summing the score of all neighbours. Since our crawler is forward-only,
+            // unvisited neighbours can be safely included since they have no score yet.
             let score = 0;
             [-1, 0, 1].forEach(x_offset => {
                 [-1, 0, 1].forEach(y_offset => {
