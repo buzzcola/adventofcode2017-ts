@@ -12,6 +12,7 @@ namespace Day03 {
     var success = true;
     var crawler = new SpiralCrawler();
     console.log('test: actual / expected');
+
     for (let i = 0; i < sampleInputs1.length; i++) {
         crawler.travelToSquare(sampleInputs1[i]);
         var pass = crawler.getDistanceToOrigin() === sampleAnswers1[i];
