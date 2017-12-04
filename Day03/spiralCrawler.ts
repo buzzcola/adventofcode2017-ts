@@ -31,12 +31,11 @@ namespace Day03 {
 
     export class SpiralCrawler {
 
-        private _currentDirection= Direction.Down;
+        private _currentDirection = Direction.Down;
         private _x = 0;
         private _y = 0;
         private _currentSquareNumber = 1;
-        private _currentSegmentLength = 0;
-        private _previousSegmentLength = 0;
+        private _segmentLengthQueue = [0, 0];
         private _positionInSegment = 0;
         private _scores = new SquareScoreContainer();
 
@@ -50,30 +49,29 @@ namespace Day03 {
         }
 
         crawlTo(squareNumber: number) {
-            if(squareNumber < this._currentSquareNumber){
+            if (squareNumber < this._currentSquareNumber) {
                 throw new Error(`Crawler is forward-only. Current square number is ${this._currentSquareNumber}`);
             }
-            
-            while(this._currentSquareNumber < squareNumber){
+
+            while (this._currentSquareNumber < squareNumber) {
                 this.crawl();
             }
         }
 
-        crawl() {
+        private crawl() {
             // if we're at the end of a segment, rotate.
-            if (this._positionInSegment == this._currentSegmentLength) {
+            if (this._positionInSegment == this._segmentLengthQueue[0]) {
                 this.rotate();
 
-                // start a new segment.
-                let newLength = this._currentSegmentLength;
-                // if we've completed two segments of the same length, time to start a longer segment.
-                if (this._currentSegmentLength == this._previousSegmentLength) {
-                    newLength = this._currentSegmentLength + 1;
+                // start a new segment. if we've completed two segments of the same length, start a longer segment.
+                let newLength = this._segmentLengthQueue[0];                
+                if (this._segmentLengthQueue[0] == this._segmentLengthQueue[1]) {
+                    newLength++;
                 }
 
-                // enqueue the new segment length in the segment length "queue"
-                this._previousSegmentLength = this._currentSegmentLength;
-                this._currentSegmentLength = newLength;
+                // save the new length in our length history.
+                this._segmentLengthQueue.pop();
+                this._segmentLengthQueue.unshift(newLength);
                 this._positionInSegment = 0;
             }
 
@@ -85,9 +83,10 @@ namespace Day03 {
                 case Direction.Up: this._y++; break;
             }
 
-            this._currentSquareNumber++;
+            // complete the move by updating the square number.
+            this._currentSquareNumber++;            
 
-            // log the new square's score.
+            // calculate the score by summing the score of all neighbours.
             let score = 0;
             [-1, 0, 1].forEach(x_offset => {
                 [-1, 0, 1].forEach(y_offset => {
@@ -106,7 +105,6 @@ namespace Day03 {
         }
 
         private rotate(): void {
-            // end of segment reached, time to turn.
             this._currentDirection =
                 this._currentDirection === Direction.Up ? Direction.Left :
                     this._currentDirection === Direction.Left ? Direction.Down :
