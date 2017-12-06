@@ -5,7 +5,7 @@ namespace Day06 {
     function solve(input: number[]): { steps: number, banks: number[] } {        
         let makeKey = (b:number[]) => b.map(x => '' + x).join('\t');
         let banks = [...input];
-        let states: Set<string> = new Set<string>();
+        let states = new Set<string>();
         let key = makeKey(banks);
         let steps = 0;
 
