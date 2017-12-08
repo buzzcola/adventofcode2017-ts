@@ -18,7 +18,7 @@ namespace Day08 {
 
     function solve(input: string): { maxFinish: number, maxGlobal: number } {
         let registers: { [name: string]: number } = {};
-        let globalMax = Number.MIN_SAFE_INTEGER;
+        let globalMax = 0;
         input.split('\n')
             .map(x => Instruction.fromString(x))
             .forEach(i => {
