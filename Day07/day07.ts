@@ -5,14 +5,14 @@ namespace Day07 {
 
     function solve1(input: string) {
         let g = makeGraphFromString(input);
-        return g.vertices.filter(v => g.edgesToVertex(v.name).length === 0)[0].name;
+        return g.vertices.filter(v => v.edgesTo.length == 0)[0].name;
     }
 
     function solve2(input: string): number {
         let g = makeGraphFromString(input);
         // there are multiple "unbalanced" vertices, but we want the only one where each of its children *is* balanced.
-        let unbalanced = g.vertices.filter(v => !g.isVertexBalanced(v.name) && v.edges.every(e => g.isVertexBalanced(e.v2)))[0];
-        let children = unbalanced.edges.map(e => g.getVertex(e.v2));
+        let unbalanced = g.vertices.filter(v => !g.isVertexBalanced(v.name) && v.edgesFrom.every(e => g.isVertexBalanced(e.v2)))[0];
+        let children = unbalanced.edgesFrom.map(e => g.getVertex(e.v2));
         let problemChild = oneOfTheseThingsIsNotLiketheOthers(g, children);
         let sibling = children.filter(v => v != problemChild)[0];
         let delta = g.getFullWeightForVertex(sibling.name) - g.getFullWeightForVertex(problemChild.name);
@@ -48,7 +48,7 @@ namespace Day07 {
         return new Vertex(name, weight, edges);
     }
 
-    
+
 
     let test1 = solve1(SAMPLE_PROBLEM);
     let pass1 = test1 === SAMPLE_ANSWER_1;

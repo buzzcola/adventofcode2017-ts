@@ -1,7 +1,8 @@
 namespace Day07 {
 
     export class Vertex {
-        constructor(public name: string, public weight: number, public edges: Edge[], public fullWeight: number = undefined) { }
+        constructor(public name: string, public weight: number, public edgesFrom: Edge[], public fullWeight: number = undefined) { }
+        edgesTo: Edge[] = [];
     }
 
     export class Edge {
@@ -11,16 +12,14 @@ namespace Day07 {
     export class Graph {
 
         private _vertices: Map<string, Vertex>;
-        private _edgesToVertices: Map<string, Edge[]>;
 
         constructor(vertices: Vertex[]) {
-            // populate the quick lookup maps. These take part 1's time from ~10s to ~12ms.
+            // populate the quick lookup map and reverse edge collections. These take part 1's time from ~10s to ~12ms.
             this._vertices = new Map<string, Vertex>(vertices.map(v => [v.name, v] as [string, Vertex]));
-            this._edgesToVertices = new Map<string, Edge[]>(vertices.map(v => [v.name, []] as [string, Edge[]]));
 
             vertices.forEach(vertex => {
-                vertex.edges.forEach(e => {
-                    this._edgesToVertices.get(e.v2).push(e);
+                vertex.edgesFrom.forEach(e => {
+                    this.getVertex(e.v2).edgesTo.push(e);
                 });
             });
         }
@@ -33,26 +32,17 @@ namespace Day07 {
             return this._vertices.get(name);
         }
 
-        edgesToVertex(name: string): Edge[] {
-            return [...this._edgesToVertices.get(name)];
-        }
-
-        edgesFromVertex(name: string): Edge[] {
-            let vertex = this._vertices.get(name);
-            return [...vertex.edges];
-        }
-
         getFullWeightForVertex(vname: string): number {
             let v = this.getVertex(vname);            
             if (v.fullWeight === undefined) {
-                v.fullWeight = v.edges.reduce((acc, edge) => acc + this.getFullWeightForVertex(edge.v2), v.weight);
+                v.fullWeight = v.edgesFrom.reduce((acc, edge) => acc + this.getFullWeightForVertex(edge.v2), v.weight);
             }
 
             return v.fullWeight;            
         }
 
         isVertexBalanced(vname: string): boolean {
-            let weights = this.getVertex(vname).edges
+            let weights = this.getVertex(vname).edgesFrom
                 .map(e => this.getFullWeightForVertex(e.v2));
 
             return !weights || weights.every(w => w === weights[0]);
