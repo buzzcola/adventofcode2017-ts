@@ -32,8 +32,8 @@ namespace Day07 {
             return this._vertices.get(name);
         }
 
-        getFullWeightForVertex(vname: string): number {
-            let v = this.getVertex(vname);            
+        getFullWeightForVertex(name: string): number {
+            let v = this.getVertex(name);            
             if (v.fullWeight === undefined) {
                 v.fullWeight = v.edgesFrom.reduce((acc, edge) => acc + this.getFullWeightForVertex(edge.v2), v.weight);
             }
@@ -41,8 +41,8 @@ namespace Day07 {
             return v.fullWeight;            
         }
 
-        isVertexBalanced(vname: string): boolean {
-            let weights = this.getVertex(vname).edgesFrom
+        isVertexBalanced(name: string): boolean {
+            let weights = this.getVertex(name).edgesFrom
                 .map(e => this.getFullWeightForVertex(e.v2));
 
             return !weights || weights.every(w => w === weights[0]);
