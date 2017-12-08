@@ -7,14 +7,14 @@ namespace Day08 {
         let globalMax = 0;
         input.split('\n').forEach(line => {
             let values = /^(\S+)\s+(\S+)\s+(-?\d+)\s+if\s+((\S+)\s\S+\s-?\d+)$/.exec(line);
-            let [target, op, amount, evalText, evalTarget] = values.slice(1);
+            let [register, op, amount, evalText, evalRegister] = values.slice(1);
             
-            if (!registers.hasOwnProperty(target)) registers[target] = 0;
-            if (!registers.hasOwnProperty(evalTarget)) registers[evalTarget] = 0;
+            if (!registers.hasOwnProperty(register)) registers[register] = 0;
+            if (!registers.hasOwnProperty(evalRegister)) registers[evalRegister] = 0;
             
             if (eval('registers.' + evalText)) {
-                registers[target] += +amount * (op === 'dec' ? -1 : 1);
-                globalMax = Math.max(globalMax, registers[target]);
+                registers[register] += +amount * (op === 'dec' ? -1 : 1);
+                globalMax = Math.max(globalMax, registers[register]);
             }
         });
 
