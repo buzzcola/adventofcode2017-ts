@@ -1,7 +1,9 @@
 namespace Day07 {
 
     export class Vertex {
-        constructor(public name: string, public weight: number, public edgesFrom: Edge[], public fullWeight: number = undefined) { }
+        constructor(public name: string, public weight: number, public edgesFrom: Edge[]) { }
+        
+        fullWeight: number;
         edgesTo: Edge[] = [];
     }
 
