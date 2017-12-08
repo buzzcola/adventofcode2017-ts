@@ -21,15 +21,14 @@ namespace Day08 {
         let globalMax = Number.MIN_SAFE_INTEGER;
         input.split('\n')
             .map(x => Instruction.fromString(x))
-            .forEach(instruction => {
+            .forEach(i => {
                 // register new registers.
-                if (!registers.hasOwnProperty(instruction.evalTarget)) registers[instruction.evalTarget] = 0;
-                if (!registers.hasOwnProperty(instruction.target)) registers[instruction.target] = 0;
+                if (!registers.hasOwnProperty(i.evalTarget)) registers[i.evalTarget] = 0;
+                if (!registers.hasOwnProperty(i.target)) registers[i.target] = 0;
 
-                if (eval('registers.' + instruction.evalText) as boolean) {
-                    let amount = instruction.amount * (instruction.operation === 'dec' ? -1 : 1);
-                    registers[instruction.target] += amount;
-                    globalMax = Math.max(globalMax, registers[instruction.target]);
+                if (eval('registers.' + i.evalText)) {
+                    registers[i.target] += i.amount * (i.operation === 'dec' ? -1 : 1);
+                    globalMax = Math.max(globalMax, registers[i.target]);
                 }
             });
 
