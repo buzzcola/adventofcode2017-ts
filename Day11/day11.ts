@@ -46,6 +46,6 @@ namespace Day11 {
     }
     if (pass) {
         console.log(`Part 1 Answer: ${solve(BIG_PROBLEM).finish}`);
-        console.log(`Part 1 Answer: ${solve(BIG_PROBLEM).max}`);
+        console.log(`Part 2 Answer: ${solve(BIG_PROBLEM).max}`);
     }
 }
