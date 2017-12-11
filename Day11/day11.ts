@@ -44,7 +44,7 @@ namespace Day11 {
         console.log(`\t${pass ? 'pass' : 'fail'}: expected:${problem[1]} actual:${test.finish}`);
         pass = passAll && pass;
     }
-    if (pass) {
+    if (passAll) {
         console.log(`Part 1 Answer: ${solve(BIG_PROBLEM).finish}`);
         console.log(`Part 2 Answer: ${solve(BIG_PROBLEM).max}`);
     }
