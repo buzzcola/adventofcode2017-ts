@@ -36,13 +36,13 @@ namespace Day11 {
         }
     }
 
-    let pass = true;
+    let passAll = true;
     console.log('Part 1 Test')
     for (let problem of SAMPLE_PROBLEMS_1) {
         let test = solve(problem[0]);
         let pass = test.finish === problem[1];
         console.log(`\t${pass ? 'pass' : 'fail'}: expected:${problem[1]} actual:${test.finish}`);
-        pass = pass && pass;
+        pass = passAll && pass;
     }
     if (pass) {
         console.log(`Part 1 Answer: ${solve(BIG_PROBLEM).finish}`);
