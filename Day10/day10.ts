@@ -36,7 +36,7 @@ namespace Day10 {
         return [...Array(size).keys()]
     }
 
-
+    /*
     let test1 = solve1(5, SAMPLE_PROBLEM_1);
     let pass1 = test1[0] * test1[1] === SAMPLE_ANSWER_1;
     console.log(`Part 1 Test -  ${pass1 ? 'pass' : 'fail'}: expected:${SAMPLE_ANSWER_1} actual:${test1[0] * test1[1]}`);
@@ -57,5 +57,6 @@ namespace Day10 {
     if (pass2) {
         console.log(`Part 2 Answer: ${solve2(BIG_PROBLEM)}`);
     }
+    */
 }
 
