@@ -18,7 +18,7 @@ namespace Day10 {
         return list;
     }
 
-    function solve2(listSize: number, input: string) {
+    export function solve2(input: string, listSize: number = 256) {
         let lengths = [...input]
             .map(i => i.charCodeAt(0))
             .concat(17, 31, 73, 47, 23);
@@ -48,14 +48,14 @@ namespace Day10 {
 
     let pass2 = true;
     SAMPLE_PROBLEMS_2.forEach(problem => {
-        let test2 = solve2(256, problem[0]);
+        let test2 = solve2(problem[0]);
         let pass = test2 === problem[1];
         console.log(`Part 2 Test -  ${pass ? 'pass' : 'fail'}: expected:${problem[1]} actual:${test2}`);
         pass2 = pass2 && pass;
     });
 
     if (pass2) {
-        console.log(`Part 2 Answer: ${solve2(256, BIG_PROBLEM)}`);
+        console.log(`Part 2 Answer: ${solve2(BIG_PROBLEM)}`);
     }
 }
 
