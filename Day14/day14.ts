@@ -1,6 +1,4 @@
 /// <reference path = "../Day10/day10.ts" />
-/// <reference path = "../Day12/graphing.ts" />
-/// <reference path = "../Day12/day12.ts" />
 /// <reference path = "input.ts" />
 
 namespace Day14 {
@@ -18,39 +16,27 @@ namespace Day14 {
             .map(hexRow => hexRow.map(digit => makeBitsFromHexDigit(digit)))
             .map(bitArrays => bitArrays.reduce((x, y) => x.concat(y)));
 
-        let vertices: Day12.Vertex[] = [];
-        let vertexGrid: Day12.Vertex[][] = [];
+        let destroy = (i: number, j: number) => {
+            if (bitGrid[i][j] == false) return;
+            bitGrid[i][j] = false;
+            if (i > 0) destroy(i - 1, j);
+            if (i < 127) destroy(i + 1, j);
+            if (j > 0) destroy(i, j - 1);
+            if (j < 127) destroy(i, j + 1);    
+        }
+
+        let groups = 0;
         for (let i of range(128)) {
-            vertexGrid[i] = [];
             for (let j of range(128)) {
                 if (bitGrid[i][j]) {
-                    vertexGrid[i][j] = new Day12.Vertex(`${i}-${j}`, []);
-                    vertices.push(vertexGrid[i][j]);
-                } else {
-                    vertexGrid[i][j] = undefined;
+                    groups++;
+                    destroy(i, j);
                 }
             }
         }
 
-        for (let i of range(128)) {
-            for (let j of range(128)) {
-                let v = vertexGrid[i][j];
-                if (v) {
-                    let down = (i < 127) ? vertexGrid[i + 1][j] : undefined;
-                    let right = vertexGrid[i][j + 1];
-                    if (down) {
-                        v.edgesFrom.push(new Day12.Edge(v.name, down.name));
-                    }
-                    if (right) {
-                        v.edgesFrom.push(new Day12.Edge(v.name, right.name));
-                    }
-                }
-            }
-        }
-
-        return Day12.solve2(new Day12.Graph(vertices));
+        return groups;
     }
-
 
     function getHexGrid(input: string) {
         return range(128)
@@ -59,9 +45,8 @@ namespace Day14 {
     }
 
     function makeBitsFromHexDigit(hexDigit: string): boolean[] {
-        let num = parseInt(hexDigit, 16);
+        let num = parseInt(hexDigit, 16);        
         let result: boolean[] = [];
-
         for (let i of range(4))
             result.unshift((num & (Math.pow(2, i))) != 0);
 
