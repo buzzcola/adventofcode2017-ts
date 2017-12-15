@@ -22,7 +22,7 @@ namespace Day14 {
             if (i > 0) destroy(i - 1, j);
             if (i < 127) destroy(i + 1, j);
             if (j > 0) destroy(i, j - 1);
-            if (j < 127) destroy(i, j + 1);    
+            if (j < 127) destroy(i, j + 1);
         }
 
         let groups = 0;
@@ -45,7 +45,7 @@ namespace Day14 {
     }
 
     function makeBitsFromHexDigit(hexDigit: string): boolean[] {
-        let num = parseInt(hexDigit, 16);        
+        let num = parseInt(hexDigit, 16);
         let result: boolean[] = [];
         for (let i of range(4))
             result.unshift((num & (Math.pow(2, i))) != 0);
@@ -68,14 +68,14 @@ namespace Day14 {
         return [...Array(size).keys()]
     }
 
-    /*
-        let test1 = solve1(SAMPLE_PROBLEM);
-        let pass1 = test1 === SAMPLE_ANSWER_1;
-        console.log(`Part 1 Test -  ${pass1 ? 'pass' : 'fail'}: expected:${SAMPLE_ANSWER_1} actual:${test1}`);
-        if (pass1) {
-            console.log(`Part 1 Answer: ${solve1(BIG_PROBLEM)}`);
-        }
-    */
+
+    let test1 = solve1(SAMPLE_PROBLEM);
+    let pass1 = test1 === SAMPLE_ANSWER_1;
+    console.log(`Part 1 Test -  ${pass1 ? 'pass' : 'fail'}: expected:${SAMPLE_ANSWER_1} actual:${test1}`);
+    if (pass1) {
+        console.log(`Part 1 Answer: ${solve1(BIG_PROBLEM)}`);
+    }
+
     let test2 = solve2(SAMPLE_PROBLEM);
     let pass2 = test2 === SAMPLE_ANSWER_2;
     console.log(`Part 2 Test -  ${pass2 ? 'pass' : 'fail'}: expected:${SAMPLE_ANSWER_2} actual:${test2}`);
