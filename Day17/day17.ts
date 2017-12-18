@@ -5,26 +5,26 @@ namespace day17 {
 
     class RingBuffer {
         position = 0;
-        content: number[] = [0];
+        content = [0];
         advance(amount: number) { this.position = (this.position + amount) % this.content.length; }
         insert(value: number) {
             let left = this.content.slice(0, this.position + 1);
             let right = this.content.slice(this.position + 1, this.content.length);
             this.content = [...left, value, ...right];
-            this.position = (this.position + 1) % this.content.length;
+            this.position++;
         }
     }
 
     class FakeRingBuffer {
         position = 0;
-        size: number = 1;
+        size = 1;
         nextAfterZero: number = undefined;
         advance(amount: number) { this.position = (this.position + amount) % this.size; }
         insert(value: number) {
             if (this.position == 0)
                 this.nextAfterZero = value;
             this.size++;
-            this.position = (this.position + 1) % this.size;
+            this.position++;
         }
     }
 
@@ -33,7 +33,7 @@ namespace day17 {
         for (let i = 1; i <= 2017; i++) {
             buffer.advance(jump);
             buffer.insert(i);
-        }        
+        }
         buffer.advance(1);
         return buffer.content[buffer.position];
     }
