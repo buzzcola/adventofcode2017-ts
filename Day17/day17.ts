@@ -33,8 +33,9 @@ namespace day17 {
         for (let i = 1; i <= 2017; i++) {
             buffer.advance(jump);
             buffer.insert(i);
-        }
-        return buffer.content[(buffer.position + 1) % buffer.content.length];
+        }        
+        buffer.advance(1);
+        return buffer.content[buffer.position];
     }
 
     function solve2(jump: number) {
