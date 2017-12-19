@@ -25,13 +25,13 @@ namespace Day19 {
             let current = this.grid[this.location[0]][this.location[1]];
             if (current === '+') this.rotate();
             let next = this.getNeighbourValue(this.direction);
+            
             if (!next || next === ' ') {
                 this.finished = true;
-                return;
+            } else {
+                this.location = this.getNeighbour(this.direction);
+                this.history.push(next);
             }
-
-            this.location = this.getNeighbour(this.direction);
-            this.history.push(next);
         }
 
         private rotate() {
