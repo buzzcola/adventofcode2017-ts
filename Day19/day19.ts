@@ -1,5 +1,5 @@
 /// <reference path="input.ts" />
-/// <reference path="Grid.ts" />
+/// <reference path="DiagramCrawler.ts" />
 
 namespace Day19 {
 

@@ -23,16 +23,7 @@ namespace Day19 {
 
         private move() {
             let current = this.grid[this.location[0]][this.location[1]];
-            let [left, right, up, down] = <Point[]>[[0, -1], [0, 1], [-1, 0], [1, 0]];
-
-            if (current === '+') {  // change direction.
-                if (this.direction[0]) { // if we're moving vertically, go horizontal.
-                    this.direction = [left, right].filter(d => /[-A-Z]/.test(this.getNeighbourValue(d)))[0];
-                } else { // if we're moving horizontally, go vertical
-                    this.direction = [up, down].filter(d => /[|A-Z]/.test(this.getNeighbourValue(d)))[0];
-                }
-            }
-
+            if (current === '+') this.rotate();
             let next = this.getNeighbourValue(this.direction);
             if (!next || next === ' ') {
                 this.finished = true;
@@ -40,7 +31,18 @@ namespace Day19 {
             }
 
             this.location = this.getNeighbour(this.direction);
-            this.history.push(current);
+            this.history.push(next);
+        }
+
+        private rotate() {
+            let [left, right, up, down] = <Point[]>[[0, -1], [0, 1], [-1, 0], [1, 0]];
+
+            if (this.direction[0]) { // if we're vertical, go horizontal.
+                this.direction = [left, right].filter(d => /[-A-Z]/.test(this.getNeighbourValue(d)))[0];
+            }
+            else { // if horizontal, go vertical.
+                this.direction = [up, down].filter(d => /[|A-Z]/.test(this.getNeighbourValue(d)))[0];
+            }
         }
 
         private getNeighbour(direction: Point): Point {
