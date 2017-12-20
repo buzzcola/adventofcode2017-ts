@@ -34,12 +34,11 @@ namespace Day18 {
         let p = [new Program(0, input), new Program(1, input)];
         [p[0].friend, p[1].friend] = [p[1], p[0]];
 
-        do {
-            p.forEach(prog => { if (!prog.finished) prog.execute(); })
-            console.log(p[1].sentCount);
-        } while (!p.reduce((a, b) => a && (b.finished || b.waiting), true));
+        while (!p.every(prog => prog.waiting || prog.finished)) {
+            p.forEach(prog => { if(!prog.finished) prog.execute(); });
+        }
 
-        return p[1].sentCount;
+        return p[1].sent;
     }
 
 
@@ -50,12 +49,10 @@ namespace Day18 {
         console.log(`Part 1 Answer: ${solve1(BIG_PROBLEM)}`);
     }
 
-    /*
     let test2 = solve2(SAMPLE_PROBLEM_2);
     let pass2 = test2 === SAMPLE_ANSWER_2;
     console.log(`Part 2 Test -  ${pass1 ? 'pass' : 'fail'}: expected:${SAMPLE_ANSWER_2} actual:${test2}`);
     if (pass2) {
-        */
-    console.log(`Part 2 Answer: ${solve2(BIG_PROBLEM)}`);
-    //}    
+        console.log(`Part 2 Answer: ${solve2(BIG_PROBLEM)}`);
+    }
 }
