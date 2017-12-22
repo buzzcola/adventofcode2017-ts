@@ -4,9 +4,10 @@ namespace Day22 {
 #..
 ...`;
 
-    export const SAMPLE_ANSWER = 5587
+    export const SAMPLE_ANSWER_1 = 5587;
+    export const SAMPLE_ANSWER_2 = 2511944;
 
-    export const BIG_PROLBEM = `#.#...###.#.##.#....##.##
+    export const BIG_PROBLEM = `#.#...###.#.##.#....##.##
 ..####.#.######....#....#
 ###..###.#.###.##.##..#.#
 ...##.....##.###.##.###..
