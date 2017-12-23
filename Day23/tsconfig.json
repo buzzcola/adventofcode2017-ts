@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "es2015",        
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "outFile": "program.js",
+        "sourceMap": true
+    }
+}

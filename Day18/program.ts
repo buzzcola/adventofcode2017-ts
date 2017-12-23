@@ -24,18 +24,21 @@ namespace Day18 {
             "set": (a: string, b: string) => { this.registers[a] = this.parse(b); this.position++; },
             "mul": (a: string, b: string) => { this.registers[a] *= this.parse(b); this.position++; },
             "add": (a: string, b: string) => { this.registers[a] += this.parse(b); this.position++; },
+            "sub": (a: string, b: string) => { this.registers[a] += this.parse(b); this.position++; },
             "mod": (a: string, b: string) => { this.registers[a] = this.registers[a] % this.parse(b); this.position++; },
             "jgz": (a: string, b: string) => { this.position += this.parse(a) > 0 ? this.parse(b) : 1; },
+            "jnz": (a: string, b: string) => { this.position += this.parse(a) != 0 ? this.parse(b) : 1; },
             "snd": (a: string) => { this.friend.queue.push(this.parse(a)); this.position++; this.sent++; },
             "rcv": (a: string) => { if (this.queue.length > 0) { this.registers[a] = this.queue.shift(); this.position++; } }
         }
 
         execute() {
             let instruction = this.instructions[this.position];
-            return this.commands[instruction.name](...instruction.args);
+            this.commands[instruction.name](...instruction.args);
+            return instruction.name;
         }
 
-        parse(arg:string) {
+        parse(arg: string) {
             return isNaN(Number(arg)) ? this.registers[arg] : parseInt(arg);
         }
 
