@@ -1,12 +1,13 @@
 /// <reference path="Particle.ts" />
 /// <reference path="input.ts" />
+/// <reference path="../util.ts" />
 
 namespace Day20 {
 
     function solve1(input: string) {
         const totallyArbitraryNumber = 500;
         let particles = input.split('\n').map((line, i) => Particle.fromString(i, line));
-        for (let i = 0; i < totallyArbitraryNumber; i++) {
+        for (let _ of range(totallyArbitraryNumber)) {
             particles.forEach(p => p.tick());
         }
         return particles.reduce((id, p) => p.distanceToOrigin < particles[id].distanceToOrigin ? p.id : id, 0);
@@ -16,7 +17,7 @@ namespace Day20 {
         const totallyArbitraryNumber = 50;
         let particles = input.split('\n').map((line, i) => Particle.fromString(i, line));
 
-        for (let i = 0; i < totallyArbitraryNumber; i++) {
+        for (let _ of range(totallyArbitraryNumber)) {
             
             // use a hash to count collisions by position.
             let positions: { [name: string]: number[] } = {};

@@ -1,3 +1,5 @@
+/// <reference path="../util.ts" />
+
 namespace Day21 {
     export class Grid {
 
@@ -10,20 +12,17 @@ namespace Day21 {
         // make a grid by combining a square 2d array of grids.
         static fromGrids(grids: Grid[][]) {
             let data: string[][] = [];
-            for (let i = 0; i < grids.length; i++) {
-                for (let j = 0; j < grids.length; j++) {
-                    let g = grids[i][j];
-                    let rowOffset = i * g.grid.length;
-                    let columnOffset = j * g.grid[0].length;
+            for (let i of range2(grids.length)) {
+                let g = grids[i.x][i.y];
+                let rowOffset = i.x * g.grid.length;
+                let columnOffset = i.y * g.grid[0].length;
 
-                    for (let i = 0; i < g.grid.length; i++) {
-                        if (!data[i + rowOffset]) data[i + rowOffset] = [];
-                        for (let j = 0; j < g.grid.length; j++) {
-                            data[i + rowOffset][j + columnOffset] = g.grid[i][j];
-                        }
-                    }
+                for (let j of range2(g.grid.length)) {
+                    if (!data[j.x + rowOffset]) data[j.x + rowOffset] = [];
+                    data[j.x + rowOffset][j.y + columnOffset] = g.grid[j.x][j.y];
                 }
             }
+
             return new Grid(data);
         }
 
@@ -36,33 +35,32 @@ namespace Day21 {
             let partitionSize = (this.grid.length % 2 === 0) ? 2 : 3;
             let result: Grid[][] = [];
             let size = this.grid.length / partitionSize;
-            for (let i = 0; i < size; i++) {
-                if (!result[i]) result[i] = [];
-                for (let j = 0; j < size; j++) {                    
-                    result[i][j] = this.subGrid(i, j);
-                }
+
+            for (let i of range2(size)) {
+                if (!result[i.x]) result[i.x] = [];
+                result[i.x][i.y] = this.subGrid(i.x, i.y);
             }
+
             return result;
         }
 
         // slice a grid out of this grid according to the partition scheme.
         private subGrid(row: number, column: number): Grid {
-            let partitionSize = this.grid.length % 2 == 0 ? 2: 3;
-            let data:string[][] = [];
-            
-            for(let i = 0; i < partitionSize; i++) {
-                if(!data[i]) data[i] = [];
-                for(let j = 0; j < partitionSize; j++){                    
-                    let rowOffset = partitionSize * row;
-                    let columnOffset = partitionSize * column;
-                    data[i][j] = this.grid[rowOffset + i][columnOffset + j];
-                }
+            let partitionSize = this.grid.length % 2 == 0 ? 2 : 3;
+            let data: string[][] = [];
+
+            for (let i of range2(partitionSize)) {
+                if (!data[i.x]) data[i.x] = [];
+                let rowOffset = partitionSize * row;
+                let columnOffset = partitionSize * column;
+                data[i.x][i.y] = this.grid[rowOffset + i.x][columnOffset + i.y];
             }
+
             return new Grid(data);
         }
 
-        getAllTransformations() : Grid[] {
-            let noflip:Grid = this;
+        getAllTransformations(): Grid[] {
+            let noflip: Grid = this;
             let xflip = this.flippedX();
             let yflip = this.flippedY();
 
@@ -88,15 +86,13 @@ namespace Day21 {
 
         private transform(fn: (i: number, j: number, max: number) => string): Grid {
             let result: string[][] = [];
-            let max = this.grid[0].length - 1;
-            for (let i = 0; i <= max; i++) {
-                for (let j = 0; j <= max; j++) {
-                    if (!result[i]) {
-                        result[i] = [];
-                    }
-                    result[i][j] = fn(i, j, max);
-                }
+            let max = this.grid.length - 1;
+
+            for (let i of range2(this.grid.length)) {
+                if (!result[i.x]) result[i.x] = [];
+                result[i.x][i.y] = fn(i.x, i.y, max);
             }
+
             return new Grid(result);
         }
     }

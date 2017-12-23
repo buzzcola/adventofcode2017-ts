@@ -1,10 +1,11 @@
-namespace Day20 {
+/// <reference path="../util.ts" />
 
-    type Point = { [dimension: string]: number, x: number, y: number, z: number }
+namespace Day20 {
+    
     const dimensions = ['x', 'y', 'z'];
 
     export class Particle {
-        constructor(public id: number, public position: Point, public velocity: Point, public acceleration: Point) { }
+        constructor(public id: number, public position: Point3, public velocity: Point3, public acceleration: Point3) { }
 
         tick() {
             for (let d of dimensions) {
@@ -18,20 +19,15 @@ namespace Day20 {
         }
 
         get distanceToOrigin() {
-            let distance = 0;
-            for (let d of dimensions) {
-                distance += Math.abs(this.position[d]);
-            }
-            return distance;
+            return dimensions.reduce((a, d) => a + Math.abs(this.position[d]));
         }
 
         static fromString(id: number, input: string): Particle {
             let rx = /\w=<[ ]?(-?\d+),([- ]?\d+),([- ]?\d+)>/g;
-            let points: Point[] = [];
-            for (let i = 0; i < 3; i++) {
-                let data = rx.exec(input);
-                points.push({ x: +data[1], y: +data[2], z: +data[3] });
-            }
+            let points = range(3)
+                .map(_ => rx.exec(input))
+                .map(d => ({x: +d[1], y:+d[2], z:+d[3]}));
+
             return new Particle(id, points[0], points[1], points[2]);
         }
     }
