@@ -1,5 +1,14 @@
-function range(size: number): number[] {
-    return [...Array(size).keys()]
+function range(size: number) {
+    let result = {
+        [Symbol.iterator]: function* () {
+            let i = 0;
+            while (i < size) {
+                yield i++;
+            }
+        }
+    };
+
+    return result;
 }
 
 type Point2 = { [dimension: string]: number, x: number, y: number };
